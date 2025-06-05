@@ -1,0 +1,15 @@
+#!/bin/bash
+
+interface=$(ip -o -4 addr show up | awk '!/ lo / {print $2; exit}')
+ip=$(ip -o -4 addr show dev "$interface" | awk '{print $4}' | cut -d/ -f1)
+
+if [ -n "$ip" ]; then
+    echo -n "Ethernet: $ip"
+    echo
+    echo "#00FF00"  # Always green
+else
+    echo -n "Ethernet: down"
+    echo
+    echo "#FF0000"
+fi
+
